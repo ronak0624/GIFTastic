@@ -1,38 +1,59 @@
-$("button").on("click", function () {
-    var animal = $(this).attr("data-animal");
+var searchTerms = ["BMW", "Tesla", "Lamborghini"];
+
+$(document).ready(function(){
+    initButtons();
+});
+
+function initButtons(){
+    for(i = 0; i < searchTerms.length; i++){
+        newButton(searchTerms[i]);
+    }
+}
+
+function newButton(text){
+    var newButton = $("<button>");
+    newButton.addClass("btn search");
+    newButton.attr("data-car", text);
+    newButton.text(text)
+    $(".search-buttons").append(newButton);
+}
+
+$(".search-buttons button").on("click", function () {
+    
+    var car = $(this).attr("data-car");
 
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-        animal + "&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10";
+        car + "&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10";
 
+    console.log(queryURL);
     $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(function (response) {
-            console.log(queryURL);
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        console.log(queryURL);
 
-            console.log(response);
+        console.log(response);
 
-            var results = response.data;
+        var results = response.data;
 
-            for (var i = 0; i < results.length; i++) {
+        for (var i = 0; i < results.length; i++) {
 
-                var animalDiv = $("<div>");
+            var carDiv = $("<div>");
 
-                var p = $("<p>").text("Rating: " + results[i].rating);
+            var p = $("<p>").text("Rating: " + results[i].rating);
 
-                var animalImage = $("<img>");
-                animalImage.attr("src", results[i].images.fixed_height.url);
+            var carImage = $("<img>");
+            carImage.attr("src", results[i].images.fixed_height.url);
 
-                animalDiv.addClass("d-inline-block");
-                animalDiv.append(p);
-                animalDiv.append(animalImage);
+            carDiv.addClass("d-inline-block");
+            carDiv.append(p);
+            carDiv.append(carImage);
 
-                $("#gifs-appear-here").prepend(animalDiv);
-            }
-        });
+            $("#car-gifs").prepend(carDiv);
+        }
+    });
 });
 
 $(".submit-button").click(function () {
-    var newButton = $("<button>");
-    newButton.addClass("");
+    newButton($(".new-car").val());
 });

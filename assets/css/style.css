@@ -1,0 +1,10 @@
+body{
+    padding: 0;
+    margin: 0;
+    font-family: 'Europa', sans-serif;
+}
+.search{
+    background-color: #00716a;
+    color: #fff;
+    margin: 5px 10px;
+}
