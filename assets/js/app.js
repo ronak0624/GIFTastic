@@ -19,7 +19,7 @@ function newButton(text){
 }
 
 $(document).on("click", ".search", function () {
-    $("")
+    $("#car-gifs").empty();
     var car = $(this).attr("data-car");
 
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -44,9 +44,10 @@ $(document).on("click", ".search", function () {
 
             var carImage = $("<img>");
             carImage.attr("src", results[i].images.fixed_height.url);
-            carImage.attr("data-still", results[i].images.fixed_height.url + "_s");
+            carImage.attr("data-still", results[i].images.fixed_height_still.url );
             carImage.attr("data-animate", results[i].images.fixed_height.url);
-            carDiv.addClass("d-inline-block gif");
+            carImage.addClass("gif");
+            carDiv.addClass("d-inline-block p-2");
             carDiv.append(p);
             carDiv.append(carImage);
 
@@ -60,7 +61,9 @@ $(".submit-button").click(function () {
 });
 
 $(document).on("click", ".gif", function() {
+
     var state = $(this).attr("data-state");
+    console.log(state);
 
     if (state === "still") {
       $(this).attr("src", $(this).attr("data-animate"));
